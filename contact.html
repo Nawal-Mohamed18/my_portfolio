@@ -22,10 +22,12 @@
   <section class="contact">
     <h2>Contact Me</h2>
     <p>Have a project or collaboration in mind? Reach out to me.</p>
-    <form class="contact-form">
-      <input type="text" placeholder="Your Name" required>
-      <input type="email" placeholder="Your Email" required>
-      <textarea placeholder="Your Message" rows="6" required></textarea>
+
+    <!-- ✅ Working Formspree Form -->
+    <form class="contact-form" action="https://formspree.io/f/xandljnv" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="_replyto" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" rows="6" required></textarea>
       <button type="submit">Send Message</button>
     </form>
   </section>
@@ -36,5 +38,27 @@
     <p>Creative • Modern • Professional</p>
     <p>&copy; 2025 Nawal. All rights reserved.</p>
   </footer>
+
+  <!-- ✅ Script to clear form & show message -->
+  <script>
+    const form = document.querySelector('.contact-form');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault(); // Stop normal submission
+      const formData = new FormData(form);
+
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        alert('Message sent successfully! Thank you.');
+        form.reset(); // ✅ Clear all fields
+      } else {
+        alert('Oops! There was a problem sending your message.');
+      }
+    });
+  </script>
 </body>
 </html>
